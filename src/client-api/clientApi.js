@@ -1,6 +1,5 @@
 const rp = require("request-promise");
-const token =
-  "BQCCZDwHM6ApJBRSiSrnApq65T0JKR_AMOkvfrgf5Ft5D6G2HBoZ45uiK4PNOXvhKLEZ3kAqnqG7fh2aPis3nPFlBkk5LQqpv-CB7rcbWYNNJJpSMrW5UMIybre6tSlCNDIBC8BljsSQTAE";
+const token = process.env.REACT_APP_API_TOKEN;
 
 const clientApi = {
   baseUrl() {
