@@ -16,6 +16,9 @@ const Home = () => {
       >
         Spotify App - React Architecture Patterns
       </Typography>
+      <Typography gutterBottom variant="h5" align="center" color="primary">
+        Context Provider Pattern
+      </Typography>
       <SelectCategories />
       <Playlists />
     </main>
