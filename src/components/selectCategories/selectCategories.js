@@ -1,19 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Select, MenuItem, FormControl } from "@material-ui/core";
-import { useDataActions, useDataState } from "../../context/dataProvider";
+import Loading from "../loading";
+import { useCategoriesQuery } from "./useCategoriesQuery";
 import "./selectCategories.css";
 
-const SelectCategories = () => {
-  const { categories, selectedCategory } = useDataState();
-  const { fetchCategories, selectCategory } = useDataActions();
+const SelectCategories = ({ selectedCategory, onCategorySelect }) => {
+  const { loading, error, data: categories } = useCategoriesQuery();
 
-  useEffect(() => {
-    fetchCategories();
-  }, []);
+  if (loading) return <Loading />;
+  if (error) return <p>Oops! No se pudieron cargar las categorías</p>;
 
-  const handleOnChange = (event) => {
-    const categoryId = event.target.value;
-    selectCategory(categoryId);
+  const handleCategorySelect = (event) => {
+    const category = event.target.value;
+    onCategorySelect(category);
   };
 
   return (
@@ -21,15 +20,16 @@ const SelectCategories = () => {
       <FormControl>
         <Select
           value={selectedCategory}
-          onChange={handleOnChange}
+          onChange={handleCategorySelect}
           variant="outlined"
         >
           <MenuItem value={-1}>Selecciona una categoría</MenuItem>
-          {categories.map(({ id, name }) => (
-            <MenuItem value={id} key={id}>
-              {name}
-            </MenuItem>
-          ))}
+          {categories &&
+            categories.map(({ id, name }) => (
+              <MenuItem value={id} key={id}>
+                {name}
+              </MenuItem>
+            ))}
         </Select>
       </FormControl>
     </div>

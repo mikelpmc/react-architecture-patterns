@@ -1,11 +1,15 @@
 import React from "react";
 import Card, { Content, Header } from "../card";
 import { Grid, Typography, CardMedia } from "@material-ui/core";
-import { useDataState } from "../../context/dataProvider";
+import Loading from "../loading";
+import { usePlaylistsQuery } from "./usePlaylistsQuery";
 import "./playlists.css";
 
-const Playlists = () => {
-  const { playlists } = useDataState();
+const Playlists = ({ category }) => {
+  const { loading, error, data: playlists } = usePlaylistsQuery(category);
+
+  if (loading) return <Loading />;
+  if (error) return <p>Oops! No se pudo cargar la playlist de {category}</p>;
 
   return (
     <div className="playlists-container">
