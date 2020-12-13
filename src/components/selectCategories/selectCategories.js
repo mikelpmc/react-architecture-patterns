@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Select, MenuItem, FormControl } from "@material-ui/core";
 import Loading from "../loading";
-import { useCategoriesQuery } from "./useCategoriesQuery";
+import { useStore, publish } from "../../store/store";
 import "./selectCategories.css";
 
-const SelectCategories = ({ selectedCategory, onCategorySelect }) => {
-  const { loading, error, data: categories } = useCategoriesQuery();
+const SelectCategories = () => {
+  const [selectedCategory, setSelectedCategory] = useState(-1);
 
-  if (loading) return <Loading />;
-  if (error) return <p>Oops! No se pudieron cargar las categorías</p>;
+  const { categories, loadingCategories } = useStore({
+    subscribedTo: "categories",
+  });
+
+  useEffect(() => {
+    publish("categories");
+  }, []);
+
+  if (loadingCategories) return <Loading />;
 
   const handleCategorySelect = (event) => {
     const category = event.target.value;
-    onCategorySelect(category);
+    setSelectedCategory(category);
+
+    publish("playlists", category);
   };
 
   return (

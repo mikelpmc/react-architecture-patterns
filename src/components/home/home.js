@@ -1,16 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import SelectCategories from "../selectCategories/";
 import Typography from "@material-ui/core/Typography";
 import Playlists from "../playlists";
 import "./home.css";
 
 const Home = () => {
-  const [selectedCategory, setSelectedCategory] = useState(-1);
-
-  const handleCategorySelect = (category) => {
-    setSelectedCategory(category);
-  };
-
   return (
     <main className="container">
       <Typography
@@ -23,13 +17,10 @@ const Home = () => {
         Spotify App - React Architecture Patterns
       </Typography>
       <Typography gutterBottom variant="h5" align="center" color="primary">
-        Query hook pattern
+        Pub sub pattern
       </Typography>
-      <SelectCategories
-        selectedCategory={selectedCategory}
-        onCategorySelect={handleCategorySelect}
-      />
-      <Playlists category={selectedCategory} />
+      <SelectCategories />
+      <Playlists />
     </main>
   );
 };
