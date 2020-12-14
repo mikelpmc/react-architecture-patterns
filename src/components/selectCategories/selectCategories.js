@@ -1,20 +1,18 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Select, MenuItem, FormControl } from "@material-ui/core";
-import { useDataActions, useDataState } from "../../context/dataProvider";
 import "./selectCategories.css";
 
-const SelectCategories = () => {
-  const { categories, selectedCategory } = useDataState();
-  const { fetchCategories, selectCategory } = useDataActions();
-
-  useEffect(() => {
-    fetchCategories();
-  }, []);
-
+const SelectCategories = ({ state, onCategorySelect, onRetry }) => {
   const handleOnChange = (event) => {
-    const categoryId = event.target.value;
-    selectCategory(categoryId);
+    const category = event.target.value;
+
+    onCategorySelect(category);
   };
+
+  if (state.matches("loading")) return <p>Cargando...</p>;
+  if (state.matches("error")) return <p>Whoops! Error</p>;
+
+  const { categories, selectedCategory } = state.context;
 
   return (
     <div className="select-container">
@@ -25,12 +23,14 @@ const SelectCategories = () => {
           variant="outlined"
         >
           <MenuItem value={-1}>Selecciona una categoría</MenuItem>
-          {categories.map(({ id, name }) => (
-            <MenuItem value={id} key={id}>
-              {name}
-            </MenuItem>
-          ))}
+          {state.matches("success") &&
+            categories.map(({ id, name }) => (
+              <MenuItem value={id} key={id}>
+                {name}
+              </MenuItem>
+            ))}
         </Select>
+        {state.matches("error") && <button onClick={onRetry}>Retry</button>}
       </FormControl>
     </div>
   );
