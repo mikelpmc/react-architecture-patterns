@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import SelectCategories from "../selectCategories/";
-import Typography from "@material-ui/core/Typography";
-import Playlists from "../playlists";
 import { inspect } from "@xstate/inspect";
 import { useMachine } from "@xstate/react";
 import categoriesMachine from "../selectCategories/categoriesMachine";
 import { getCategories } from "../../services";
+import SelectCategories from "../selectCategories/";
+import Typography from "@material-ui/core/Typography";
+import Playlists from "../playlists";
 import "./home.css";
 
 inspect({

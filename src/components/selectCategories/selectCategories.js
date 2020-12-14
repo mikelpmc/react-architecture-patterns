@@ -1,5 +1,6 @@
 import React from "react";
 import { Select, MenuItem, FormControl } from "@material-ui/core";
+import Loading from "../loading";
 import "./selectCategories.css";
 
 const SelectCategories = ({ state, onCategorySelect, onRetry }) => {
@@ -9,7 +10,7 @@ const SelectCategories = ({ state, onCategorySelect, onRetry }) => {
     onCategorySelect(category);
   };
 
-  if (state.matches("loading")) return <p>Cargando...</p>;
+  if (state.matches("loading")) return <Loading />;
   if (state.matches("error")) return <p>Whoops! Error</p>;
 
   const { categories, selectedCategory } = state.context;

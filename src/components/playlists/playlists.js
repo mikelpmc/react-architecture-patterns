@@ -1,7 +1,8 @@
 import React from "react";
+import { useService } from "@xstate/react";
 import Card, { Content, Header } from "../card";
 import { Grid, Typography, CardMedia } from "@material-ui/core";
-import { useService } from "@xstate/react";
+import Loading from "../loading";
 import "./playlists.css";
 
 const Playlists = ({ service }) => {
@@ -9,7 +10,7 @@ const Playlists = ({ service }) => {
 
   const { playlists } = state.context;
 
-  if (state.matches("loading")) return <p>Cargando...</p>;
+  if (state.matches("loading")) return <Loading />;
   if (state.matches("error")) return <p>Whoops! Error</p>;
 
   return (
